@@ -195,6 +195,13 @@ func main() {
 		log.Println("error no input file and filter")
 		return
 	}
+	out, err := os.Create(opts.Log)
+	if err != nil {
+		log.Errorf("creat %s file error", opts.Log)
+		return
+	}
+	defer out.Close()
+	log.Out = out
 	_, err = parsePcapFile(opts.InFile, opts.OutFile, opts.Filter)
 	if err != nil {
 		log.Println("error parse pcap file ")
